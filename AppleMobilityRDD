@@ -1,0 +1,44 @@
+library(rdd)
+library(ggplot2)
+library(texreg)
+
+
+data<- read.csv("mob_dat.csv")
+
+
+#drivingに回帰
+ggplot(data = data, mapping =aes(x = date1, y = driving, color = Olympic)) +
+  geom_point()
+rdd_result1<- RDestimate(data=data,formula=driving~date1,cutpoint=30.5)
+summary(rdd_result1)
+
+
+plot(rdd_result1) 
+abline(v=30.5,lty=2,col="blue")
+title(main="Olympic's impact on driving",xlab="Date",ylab="driving")
+
+#transitに回帰
+rdd_result2<- RDestimate(data=data,formula=transit~date1,cutpoint=30.5)
+summary(rdd_result2)
+
+
+plot(rdd_result2) 
+abline(v=30.5,lty=2,col="red")
+title(main="Olympic's impact on transit",xlab="Date",ylab="transit")
+
+#walking
+rdd_result3<- RDestimate(data=data,formula=walking~date1,cutpoint=30.5)
+summary(rdd_result3)
+
+
+plot(rdd_result3) 
+abline(v=30.5,lty=2,col="green")
+title(main="Olympic's impact on walking",xlab="Date",ylab="walking")
+
+
+
+regs <- list(rdd_result1, rdd_result2, rdd_result3)
+screenreg(regs)
+
+
+
