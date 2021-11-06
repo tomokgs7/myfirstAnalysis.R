@@ -1,0 +1,130 @@
+rm(list = ls())
+
+install.packages("modelsummary")
+library(texreg)
+install.packages("tidyverse")
+library('msummary')
+library(ggplot2)
+data <-read.csv("panel_open.csv")
+library(ggplot2)
+
+data$Japan
+
+#データを図示
+ggplot(data, mapping = aes(x = date1, y = go_out, group = Year)) +
+  geom_line(mapping = aes(color = Year )) +
+  labs(x = "日付", y = "検索強度（「外出」）") 
+
+is.na(data$did_opening)
+
+#開会式前後のDID
+data <-read.csv("panel_open.csv")
+#レストランモデル
+rest = lm(restaurant ~ Year_dum + did_opening + Japan + Tokyo, data = data)
+
+summary(model)
+
+#旅行モデル
+model.trip = lm(trip ~ Year_dum + did_opening + Japan + Tokyo, data = data)
+
+summary(model.trip)
+
+#帰省モデル
+model.go_back_home = lm(go_back_home ~ Year_dum +  did_opening + Japan + Tokyo, data = data)
+
+summary(model.go_back_home)
+
+#遊びモデル
+model.play = lm(play ~ Year_dum + did_opening + Japan + Tokyo, data = data)
+
+summary(model.play)
+
+#観光モデル
+model.sightseeing = lm(sightseeing ~ Year_dum + did_opening + Tokyo + Japan, data = data)
+
+summary(model.sightseeing)
+
+#結果を集計
+reg <- lm(mpg ~ cyl+disp, mtcars)
+
+msummary(reg)
+
+reg1 <- 
+  list(
+  'レストラン' = lm(restaurant ~ Year_dum + did_opening + Japan + Tokyo, data = data),
+  'カフェ' = lm(cafe ~ Year_dum + did_opening + Japan + Tokyo, data = data),
+  '水族館' = lm(aqua ~ Year_dum +  did_opening + Japan + Tokyo, data = data),
+  '本屋' = lm(book ~ Year_dum + did_opening + Japan + Tokyo, data = data),
+  '映画館' = lm(cinema ~ Year_dum + did_opening + Tokyo + Japan, data = data)
+)
+
+reg2 <- 
+  list(
+    '西友' = lm(seiyu ~ Year_dum + did_opening + Japan + Tokyo, data = data),
+    'イオン' = lm(aeon ~ Year_dum + did_opening + Japan + Tokyo, data = data),
+    'マツモトキヨシ' = lm(kiyoshi ~ Year_dum +  did_opening + Japan + Tokyo, data = data),
+    'ウェルシア' = lm(welcia ~ Year_dum + did_opening + Japan + Tokyo, data = data),
+    '成城石井' = lm(seijo ~ Year_dum + did_opening + Tokyo + Japan, data = data)
+  )
+screenreg(reg1)
+
+#閉会式前後のDID
+data2 <-read.csv('panel_close.csv')
+data
+#外出モデル
+model.go_out2 = lm(go_out ~ Year_dum + did_closing + Japan + Tokyo, data = data2)
+
+summary(model.go_out)
+
+#旅行モデル
+model.trip2 = lm(trip ~ Year_dum + did_closing + Japan + Tokyo, data = data2)
+
+summary(model.trip)
+
+#帰省モデル
+model.go_back_home2 = lm(go_back_home ~ Year_dum +  did_closing + Japan + Tokyo, data = data2)
+
+summary(model.go_back_home)
+
+#遊びモデル
+model.play2 = lm(play ~ Year_dum + did_closing + Japan + Tokyo, data = data2)
+
+summary(model.play)
+
+#観光モデル
+model.sightseeing2 = lm(sightseeing ~ Year_dum + did_closing + Tokyo + Japan, data = data2)
+
+summary(model.sightseeing)
+
+#結果を集計
+reg3 <- 
+  list(
+    'レストラン' = lm(restaurant ~ Year_dum + did_closing + Japan + Tokyo, data = data2),
+    'カフェ' = lm(cafe ~ Year_dum + did_closing + Japan + Tokyo, data = data2),
+    '水族館' = lm(aqua ~ Year_dum +  did_closing + Japan + Tokyo, data = data2),
+    '本屋' = lm(book ~ Year_dum + did_closing + Japan + Tokyo, data = data2),
+    '映画館' = lm(cinema ~ Year_dum + did_closing + Tokyo + Japan, data = data2)
+  )
+
+reg4 <- 
+  list(
+    '西友' = lm(seiyu ~ Year_dum + did_closing + Japan + Tokyo, data = data2),
+    'イオン' = lm(aeon ~ Year_dum + did_closing + Japan + Tokyo, data = data2),
+    'マツモトキヨシ' = lm(kiyoshi ~ Year_dum +  did_closing + Japan + Tokyo, data = data2),
+    'ウェルシア' = lm(welcia ~ Year_dum + did_closing + Japan + Tokyo, data = data2),
+    '成城石井' = lm(seijo ~ Year_dum + did_closing + Tokyo + Japan, data = data2)
+  )
+screenreg(reg1)
+screenreg(reg2)
+screenreg(reg3)
+screenreg(reg4)
+
+install.packages("modelsummary")
+install.packages("tidyverse")
+
+
+
+
+ggplot(data, mapping =aes(color = Year_dum)) +
+  geom_smooth(mapping = aes(x = date1[1:17],y = restaurant[1:17]))+
+  geom_smooth(mapping = aes(x = date1, y = resutaurant))
