@@ -1,0 +1,70 @@
+library(texreg)
+library(ggplot2)
+
+
+data <-read.csv("panel_open.csv")
+data2 <-read.csv("panel_close.csv")
+
+#モビリティレポートに基づく単語の検証
+#ショッピングセンター
+
+model1 = lm(shopcent ~ Year_dum + did_opening + Japan + Tokyo, data = data)
+
+summary(model1)
+
+model5 = lm(shopcent ~ Year_dum + did_closing + Japan + Tokyo, data = data2)
+
+summary(model5)
+
+#映画
+
+model2 = lm(mov ~ Year_dum + did_opening + Japan + Tokyo, data = data)
+
+summary(model2)
+
+model6 = lm(mov ~ Year_dum + did_closing + Japan + Tokyo, data = data2)
+
+summary(model6)
+
+#スーパーマーケット
+
+model3 = lm(supma ~ Year_dum + did_opening + Japan + Tokyo, data = data)
+
+summary(model3)
+
+model7 = lm(supma ~ Year_dum + did_closing + Japan + Tokyo, data = data2)
+
+summary(model7)
+
+#薬局
+
+model4 = lm(shopcent ~ Year_dum + did_opening + Japan + Tokyo, data = data)
+
+summary(model4)
+
+model8 = lm(shopcent ~ Year_dum + did_closing + Japan + Tokyo, data = data2)
+
+summary(model8)
+
+
+reg1 <- list(
+  model1 = lm(shopcent ~ Year_dum + did_opening + Japan + Tokyo, data = data),
+  model2 = lm(mov ~ Year_dum + did_opening + Japan + Tokyo, data = data),
+  model3 = lm(supma ~ Year_dum + did_opening + Japan + Tokyo, data = data),
+  model4 = lm(shopcent ~ Year_dum + did_opening + Japan + Tokyo, data = data)
+)
+
+
+reg2 <- list(
+  model5 = lm(shopcent ~ Year_dum + did_closing + Japan + Tokyo, data = data2),
+  model6 = lm(mov ~ Year_dum + did_closing + Japan + Tokyo, data = data2),
+  model7 = lm(supma ~ Year_dum + did_closing + Japan + Tokyo, data = data2),
+  model8 = lm(shopcent ~ Year_dum + did_closing + Japan + Tokyo, data = data2)
+)
+
+
+screenreg(reg1)
+screenreg(reg2)
+
+
+
