@@ -1,0 +1,104 @@
+data <-read.csv("data_google.csv")
+data
+summary(data)
+library(rdd)
+library(tidyverse)
+help(plot)
+
+#retail_and_recreation
+ggplot(data = data, mapping = aes(x = date1, y = retail_and_recreation, color = time)) + 
+  geom_point() + 
+  geom_smooth(data = data, mapping = aes(color = time), method = "lm", se = FALSE) +
+  geom_vline(xintercept= 30.5,color = 'black') 
+
+rdd_result1<- RDestimate(data=data,formula=retail_and_recreation~date1,cutpoint=30.5)
+summary(rdd_result1)
+
+plot(rdd_result1, se = FALSE) 
+abline(v=30.5,lty=2,col="blue")
+title(main="Olympic's impact on retail_and_recreation",xlab="Date",ylab="retail_and_recreation")
+
+ggplot(data = data, mapping = aes(x = date1, y = retail_and_recreation, color = time)) + geom_point() + geom_smooth(mapping = aes(y = parks)) + geom_vline(xintercept= 30.5,color = 'gray')
+
+
+#grocery_and_pharmacy
+ggplot(data = data, mapping = aes(x = date1, y = grocery_and_pharmacy, color = time)) + 
+  geom_point() + 
+  geom_smooth(data = data, mapping = aes(color = time), method = "lm", se = FALSE) +
+  geom_vline(xintercept= 30.5,color = 'black') 
+
+rdd_result2<- RDestimate(data=data,formula=grocery_and_pharmacy~date1,cutpoint=30.5)
+summary(rdd_result2)
+
+plot(rdd_result2) 
+abline(v=30.5,lty=2,col="red")
+title(main="Olympic's impact on grocery_and_pharmacy",xlab="Date",ylab="grocery_and_pharmacy")
+
+#parks
+ggplot(data = data, mapping = aes(x = date1, y = parks, color = time)) + 
+  geom_point() + 
+  geom_smooth(data = data, mapping = aes(color = time), method = "lm", se = FALSE) +
+  geom_vline(xintercept= 30.5,color = 'black') 
+
+rdd_result3<- RDestimate(data=data,formula=parks~date1,cutpoint=30.5)
+summary(rdd_result3)
+
+plot(rdd_result3) 
+abline(v=30.5,lty=2,col="green")
+title(main="Olympic's impact on parks",xlab="Date",ylab="parks")
+
+
+#stations
+ggplot(data = data, mapping = aes(x = date1, y = stations, color = time)) + 
+  geom_point() + 
+  geom_smooth(data = data, mapping = aes(color = time), method = "lm", se = FALSE) +
+  geom_vline(xintercept= 30.5,color = 'black') 
+
+rdd_result4<- RDestimate(data=data,formula=stations~date1,cutpoint=30.5)
+summary(rdd_result4)
+
+plot(rdd_result4) 
+abline(v=30.5,lty=2,col="purple")
+title(main="Olympic's impact on stations",xlab="Date",ylab="stations")
+
+
+#workplaces
+ggplot(data = data, mapping = aes(x = date1, y = workplaces, color = time)) + 
+  geom_point() + 
+  geom_smooth(data = data, mapping = aes(color = time), method = "lm", se = FALSE) +
+  geom_vline(xintercept= 30.5,color = 'black') 
+
+rdd_result5<- RDestimate(data=data,formula=workplaces~date1,cutpoint=30.5)
+summary(rdd_result5)
+
+plot(rdd_result5) 
+abline(v=30.5,lty=2,col="yellow")
+title(main="Olympic's impact on workplaces",xlab="Date",ylab="workplaces")
+
+#residential
+ggplot(data = data, mapping = aes(x = date1, y = residential, color = time)) + 
+  geom_point() + 
+  geom_smooth(data = data, mapping = aes(color = time), method = "lm", se = FALSE) +
+  geom_vline(xintercept= 30.5,color = 'black') 
+
+rdd_result6<-RDestimate(data=data,formula=residential~date1,cutpoint=30.5)
+summary(rdd_result6)
+
+plot(rdd_result6) 
+abline(v=30.5,lty=2,col="orange")
+title(main="Olympic's impact on residential",xlab="Date",ylab="residential")
+
+
+ggplot(data = data, mapping = aes(x = date1, y = parks)) + geom_point(mapping = aes(color = time)) + geom_smooth()
+abline(v=30.5,lty=2,col="purple")
+
+ggplot(data = data, mapping = aes(x = date1, y = parks, color = time)) + geom_point() + geom_smooth(mapping = aes(y = parks)) + geom_vline(xintercept= 30.5,color = 'gray')
+ggplot(data = data, mapping = aes(x = date1, y = parks, color = time)) + 
+  geom_point() + 
+  geom_smooth(data = data, mapping = aes(x = date1, y = parks, color = time), method = "lm", se = FALSE) +
+  geom_vline(xintercept= 30.5,color = 'gray') 
+?geom_smooth
+
+?plot
+
+
